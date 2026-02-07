@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Momo ❤️</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+.card{
+  background:white;
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
+  width:320px;
+}
+h1{color:#ff2f6e;}
+button{
+  padding:12px 22px;
+  font-size:16px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  margin:10px;
+}
+#yes{background:#ff2f6e;color:white;}
+#no{background:#ccc;position:absolute;}
+
+.photo{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #ff2f6e;
+  margin-bottom:15px;
+}
+
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(-100vh);opacity:0;}
+}
+
+.gift{
+  font-size:70px;
+  cursor:pointer;
+}
+
+.typing{
+  font-size:22px;
+  color:#ff2f6e;
+  font-weight:bold;
+  min-height:30px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <img src="momo.jpg" class="photo" alt="Momo">
+  <h1>Momo ❤️</h1>
+  <p>Will you be my Valentine?</p>
+  <button id="yes" onclick="yesClicked()">Yes 💖</button>
+  <button id="no" onmouseover="moveNo()">No 😅</button>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/28/audio_0b8c1e9b8b.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function moveNo(){
+  const no=document.getElementById("no");
+  no.style.left=Math.random()*(window.innerWidth-100)+"px";
+  no.style.top=Math.random()*(window.innerHeight-100)+"px";
+}
+
+function yesClicked(){
+  document.getElementById("bgMusic").play();
+
+  document.body.innerHTML=`
+    <div class="card">
+      <img src="momo.jpg" class="photo">
+      <h1>Yayyy 💖</h1>
+      <p class="typing" id="typing"></p>
+      <div class="gift" onclick="openGift()">🎁</div>
+      <p>(Tap the gift)</p>
+    </div>`;
+  
+  startTyping("I love you Momo ❤️");
+  setInterval(createHeart,400);
+}
+
+function startTyping(text){
+  let i=0;
+  const typing=document.getElementById("typing");
+  const interval=setInterval(()=>{
+    typing.innerHTML+=text.charAt(i);
+    i++;
+    if(i===text.length) clearInterval(interval);
+  },120);
+}
+
+function openGift(){
+  document.body.innerHTML=`
+    <div class="card">
+      <img src="momo.jpg" class="photo">
+      <h1>💝 Surprise 💝</h1>
+      <p>
+        Momo, you are my favourite person ❤️<br>
+        Happy Valentine’s Day 😘
+      </p>
+    </div>`;
+}
+
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+</script>
+
+</body>
+</html>
